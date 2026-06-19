@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aplikasi Web Digital Scrapbook Journal 🌸
 
-## Getting Started
+Ini adalah bagian frontend web dari proyek **Digital Scrapbook Journal** (dengan Tema Kawaii). Aplikasi ini dibangun menggunakan [Next.js](https://nextjs.org) dengan App Router, CSS Modules kustom, dan menggunakan [Supabase](https://supabase.com) sebagai backend.
 
-First, run the development server:
+## Fitur Utama ✨
+- **Autentikasi Pengguna:** Pendaftaran dan masuk akun yang aman dengan Supabase Auth.
+- **Desain Buku Harian Kustom (Scrapbook):** Latar belakang dot-grid krem yang aesthetic, kartu pastel dengan kemiringan acak kecil, dan dekorasi stiker pita perekat (washi tape).
+- **Operasi CRUD Lengkap:** Tulis, baca, edit, dan hapus catatan jurnal harianmu secara instan.
+- **Filter Mood & Pencarian:** Cari kenangan manismu berdasarkan judul/isi cerita atau saring langsung menggunakan emoji perasaan (mood).
+- **Desain Responsif:** Tampilan yang manis baik diakses melalui komputer desktop maupun ponsel pintarmu.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Cara Menjalankan Secara Lokal 🔧
+
+### 1. Prasyarat
+Pastikan kamu telah menginstal Node.js (versi 18 ke atas) dan npm di komputermu.
+
+### 2. Konfigurasi Variabel Lingkungan
+Buat file bernama `.env.local` di dalam folder `web/` dan tambahkan kredensial Supabase milikmu:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://proyek-kamu.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=kunci-anon-kamu
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Instal Dependensi
+Jalankan perintah berikut di terminal:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 4. Jalankan Server Pengembangan
+Jalankan server lokal dengan perintah:
+```bash
+npm run dev
+```
+Buka peramban dan akses [http://localhost:3000](http://localhost:3000) untuk melihat hasilnya.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Cara Penyebaran (Deployment) ke GitHub Pages 🚀
 
-## Learn More
+Aplikasi ini dikonfigurasi untuk diekspor secara statis (`output: 'export'`) dan dideploy ke GitHub Pages pada alamat sub-path `/journal`.
 
-To learn more about Next.js, take a look at the following resources:
+Setiap kali ada push ke cabang `main`, alur kerja GitHub Actions `.github/workflows/deploy.yml` akan otomatis:
+1. Mem-build Next.js statis.
+2. Mengekspor folder `out/`.
+3. Mengunggah dan merilis file ke cabang `gh-pages` untuk ditayangkan.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> 💡 **Penting:** Pastikan untuk menambahkan `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_ANON_KEY` ke dalam **GitHub Actions Secrets** (di Settings -> Secrets and variables -> Actions) pada repositori GitHub-mu agar aplikasi web dapat berkomunikasi dengan database Supabase saat online.
