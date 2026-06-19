@@ -55,25 +55,35 @@ export default function Home() {
   // Ambil user saat komponen dimuat
   useEffect(() => {
     const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setUser(session?.user || null);
-      if (session?.user) {
-        fetchEntries(session.user.id);
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        setUser(session?.user || null);
+        if (session?.user) {
+          await fetchEntries(session.user.id);
+        }
+      } catch (error) {
+        console.error("Gagal memuat sesi:", error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     getSession();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setUser(session?.user || null);
-        if (session?.user) {
-          fetchEntries(session.user.id);
-        } else {
-          setEntries([]);
+      async (_event, session) => {
+        try {
+          setUser(session?.user || null);
+          if (session?.user) {
+            await fetchEntries(session.user.id);
+          } else {
+            setEntries([]);
+          }
+        } catch (error) {
+          console.error("Gagal menangani perubahan auth:", error);
+        } finally {
+          setLoading(false);
         }
-        setLoading(false);
       }
     );
 
